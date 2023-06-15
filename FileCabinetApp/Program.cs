@@ -2,7 +2,7 @@
 {
     public static class Program
     {
-        private const string DeveloperName = "Vasili Vasilyev2";
+        private const string DeveloperName = "Stanislau Zaitsau";
         private const string HintMessage = "Enter your command, or enter 'help' to get help.";
         private const int CommandHelpIndex = 0;
         private const int DescriptionHelpIndex = 1;
@@ -30,7 +30,7 @@
 
             do
             {
-                Console.Write("> ");
+                Console.Write("-> ");
                 var line = Console.ReadLine();
                 var inputs = line != null ? line.Split(' ', 2) : new string[] { string.Empty, string.Empty };
                 const int commandIndex = 0;
