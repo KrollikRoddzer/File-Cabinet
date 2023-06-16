@@ -1,4 +1,4 @@
-﻿namespace FileCabinetApp.FileCabinetService;
+﻿namespace FileCabinetApp.Service;
 
 public class FileCabinetRecord
 {
