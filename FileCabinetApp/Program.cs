@@ -25,6 +25,7 @@
         {
             new string[] { "help", "prints the help screen", "The 'help' command prints the help screen." },
             new string[] { "exit", "exits the application", "The 'exit' command exits the application." },
+            new string[] { "stat", "prints record count", "The 'stat' command prints record counts." },
         };
 
         public static void Main(string[] args)
