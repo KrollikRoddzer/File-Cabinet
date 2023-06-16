@@ -1,4 +1,6 @@
-﻿public class FileCabinetRecord
+﻿namespace FileCabinetApp.FileCabinetService;
+
+public class FileCabinetRecord
 {
     public int Id { get; set; }
 
