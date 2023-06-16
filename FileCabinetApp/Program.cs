@@ -116,19 +116,30 @@
         private static void Create(string parameters)
         {
             Console.Write("First name: ");
-            string firstName;
+            string? firstName;
             firstName = Console.ReadLine();
 
             Console.Write("Last name: ");
-            string lastName;
+            string? lastName;
             lastName = Console.ReadLine();
 
             Console.Write("Date of birth: ");
-            string dateOfBirth;
+            string? dateOfBirth;
             dateOfBirth = Console.ReadLine();
-            DateTime date = DateTime.Parse(dateOfBirth, FileCabinetRecord.DateFormat);
+            DateTime date = DateTime.Parse(dateOfBirth is null ? throw new ArgumentException("Date of birth must not be null") : dateOfBirth, FileCabinetRecord.DateFormat);
 
-            Console.WriteLine($"Record #{fileCabinetService.CreateRecord(firstName, lastName, date)} is created.");
+            Console.Write("Sex: ");
+            string? sex_ = Console.ReadLine();
+            char sex = sex_ is null || sex_.Length != 1 ? throw new ArgumentException("Sex must be m or f.") : sex_[0];
+
+            Console.Write("Post index: ");
+            string? postIndexString = Console.ReadLine();
+            int postIndex = int.Parse(postIndexString is null ? throw new ArgumentException("Post index must be not null.") : postIndexString);
+
+            Console.Write("Country: ");
+            string? country = Console.ReadLine();
+
+            Console.WriteLine($"Record #{fileCabinetService.CreateRecord(firstName is null ? string.Empty : firstName, lastName is null ? string.Empty : lastName, date, sex, postIndex, country is null ? string.Empty : country)} is created.");
         }
 
         private static void GetRecords(string parameters)
