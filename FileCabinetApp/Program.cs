@@ -21,6 +21,7 @@
             new Tuple<string, Action<string>>("exit", Exit),
             new Tuple<string, Action<string>>("stat", Stat),
             new Tuple<string, Action<string>>("create", Create),
+            new Tuple<string, Action<string>>("list", GetRecords),
         };
 
         private static string[][] helpMessages = new string[][]
@@ -29,6 +30,7 @@
             new string[] { "exit", "exits the application", "The 'exit' command exits the application." },
             new string[] { "stat", "prints record count", "The 'stat' command prints record counts." },
             new string[] { "create", "creates a new record", "The 'create' command creates a new record." },
+            new string[] { "list", "prints all records", "The 'list' command prints all records." },
         };
 
         public static void Main(string[] args)
@@ -127,6 +129,14 @@
             DateTime date = DateTime.Parse(dateOfBirth, FileCabinetRecord.DateFormat);
 
             Console.WriteLine($"Record #{fileCabinetService.CreateRecord(firstName, lastName, date)} is created.");
+        }
+
+        private static void GetRecords(string parameters)
+        {
+            foreach (var record in fileCabinetService.GetRecords())
+            {
+                Console.WriteLine(record.ToString());
+            }
         }
     }
 }
