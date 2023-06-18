@@ -5,6 +5,7 @@
 
 #
 .vscode/
+FileCabinetApp.Tests/
 
 # User-specific files
 *.rsuser
