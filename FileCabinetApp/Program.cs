@@ -1,6 +1,5 @@
 ﻿﻿namespace FileCabinetApp
 {
-    using System.Globalization;
     using FileCabinetApp.Service;
 
     public static class Program
@@ -23,6 +22,7 @@
             new Tuple<string, Action<string>>("create", Create),
             new Tuple<string, Action<string>>("list", GetRecords),
             new Tuple<string, Action<string>>("edit", Edit),
+            new Tuple<string, Action<string>>("find", Find),
         };
 
         private static string[][] helpMessages = new string[][]
@@ -33,6 +33,7 @@
             new string[] { "create", "creates a new record", "The 'create' command creates a new record." },
             new string[] { "list", "prints all records", "The 'list' command prints all records." },
             new string[] { "edit", "edits the record if it's exist. Input format: edit {id(integer)}", "The 'edit' command edits the record if it's exist." },
+            new string[] { "find", "finds records accoarding these criteria: FirstName, LastName, DateOfBirth, Id, Sex, Country, PostIndex.", "The 'find' command searchs for records accoarding different criteria." },
         };
 
         public static void Main(string[] args)
@@ -181,6 +182,31 @@
             try
             {
                 fileCabinetService.EditRecord(id);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private static void Find(string parameters)
+        {
+            string[] paramArray = parameters.Split(' ');
+
+            if (paramArray.Length != 2)
+            {
+                Console.WriteLine("Find command must have only 2 parameters. Criteria(FirstName, LastName, DateOfBirth, Id, Sex, Country, PostIndex) and value.");
+                return;
+            }
+
+            try
+            {
+                var list = fileCabinetService.Find(paramArray[0], paramArray[1]);
+                Console.WriteLine($"Found {list.Length} records.");
+                foreach (var item in list)
+                {
+                    Console.WriteLine(item);
+                }
             }
             catch (ArgumentException ex)
             {

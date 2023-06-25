@@ -181,4 +181,71 @@ public class FileCabinetService
 
         Console.WriteLine($"Record #{id} is updated.");
     }
+
+    public FileCabinetRecord[] Find(string criteriaString, string parameter)
+    {
+        EFindCriteria criteria;
+        if (!Enum.TryParse<EFindCriteria>(criteriaString, true, out criteria))
+        {
+            throw new ArgumentException($"Unable to cast {criteriaString} to {nameof(EFindCriteria)}.\nAvailable criteria: FirstName, LastName, DateOfBirth, Id, Sex, Country, PostIndex.");
+        }
+
+        switch (criteria)
+        {
+            case EFindCriteria.FirstName:
+                return this.list.Where(item => item.FirstName == parameter).ToArray();
+                break;
+
+            case EFindCriteria.LastName:
+                return this.list.Where(item => item.LastName == parameter).ToArray();
+                break;
+
+            case EFindCriteria.DateOfBirth:
+                DateTime date;
+                if (!DateTime.TryParse(parameter, out date))
+                {
+                    throw new ArgumentException("Unable to parse date. Correct date format is dd/mm/yyyy");
+                }
+
+                return this.list.Where(item => item.DateOfBirth == date).ToArray();
+                break;
+
+            case EFindCriteria.Id:
+                int id;
+                if (!int.TryParse(parameter, out id))
+                {
+                    throw new ArgumentException("Id parameter must be an integer.");
+                }
+
+                return this.list.Where(item => item.Id == id).ToArray();
+                break;
+
+            case EFindCriteria.Sex:
+                char sex;
+                if (!char.TryParse(parameter, out sex))
+                {
+                    throw new ArgumentException("Sex parameter must be f or m.");
+                }
+
+                return this.list.Where(item => item.Sex == sex).ToArray();
+                break;
+
+            case EFindCriteria.Country:
+                return this.list.Where(item => item.Country == parameter).ToArray();
+                break;
+
+            case EFindCriteria.PostIndex:
+                int postIndex;
+                if (!int.TryParse(parameter, out postIndex))
+                {
+                    throw new ArgumentException("Post index must be an integer between 100000 and 999999.");
+                }
+
+                return this.list.Where(item => item.PostIndex == postIndex).ToArray();
+                break;
+
+            default:
+                throw new SystemException("Error in EFindCriteria!!!");
+        }
+    }
 }
